@@ -27,18 +27,18 @@
   ;; define root keybindings
   (general-define-keys
    ;; media-keys
-   `("XF86AudioLowerVolume" (exec "pactl set-sink-volume @DEFAULT_SINK@ -5%") #:wk "Decrease Volume")
-   `("XF86AudioRaiseVolume" (exec "pactl set-sink-volume @DEFAULT_SINK@ +5%") #:wk "Increase Volume")
-   `("s-[" (exec "pactl set-sink-volume @DEFAULT_SINK@ -5%") #:wk "Decrease Volume")
-   `("s-]" (exec "pactl set-sink-volume @DEFAULT_SINK@ +5%") #:wk "Increase Volume")
-   `("XF86AudioMute" (exec "pactl set-sink-mute @DEFAULT_SINK@ toggle") #:wk "Toggle Mute")
-   `("XF86AudioNext" (exec "mpc next") #:wk "Next Song")
-   `("XF86AudioPrev" (exec "mpc prev") #:wk "Previous Song")
-   `("XF86AudioPlay" (exec "mpc toggle") #:wk "Toggle Player")
+;;    `("XF86AudioLowerVolume" (exec "pactl set-sink-volume @DEFAULT_SINK@ -5%") #:wk "Decrease Volume")
+;;    `("XF86AudioRaiseVolume" (exec "pactl set-sink-volume @DEFAULT_SINK@ +5%") #:wk "Increase Volume")
+;;    `("s-[" (exec "pactl set-sink-volume @DEFAULT_SINK@ -5%") #:wk "Decrease Volume")
+;;    `("s-]" (exec "pactl set-sink-volume @DEFAULT_SINK@ +5%") #:wk "Increase Volume")
+;;    `("XF86AudioMute" (exec "pactl set-sink-mute @DEFAULT_SINK@ toggle") #:wk "Toggle Mute")
+;;    `("XF86AudioNext" (exec "mpc next") #:wk "Next Song")
+;;    `("XF86AudioPrev" (exec "mpc prev") #:wk "Previous Song")
+;;    `("XF86AudioPlay" (exec "mpc toggle") #:wk "Toggle Player")
 
-   ;; brightness-keys
-   `("XF86MonBrightnessUp" (exec "brightnessctl set +10%") #:wk "Increase Brightness")
-   `("XF86MonBrightnessDown" (exec "brightnessctl set 10%-") #:wk "Decrease Brightness")
+;;    ;; brightness-keys
+;;    `("XF86MonBrightnessUp" (exec "brightnessctl set +10%") #:wk "Increase Brightness")
+;;    `("XF86MonBrightnessDown" (exec "brightnessctl set 10%-") #:wk "Decrease Brightness")
 
    ;; window and group management
    `("s-f" (sway-fullscreen SWAY-FULLSCREEN-TOGGLE) #:wk "Toggle Fullscreen")
@@ -48,6 +48,8 @@
    `("s-j" (sway-focus-container SWAY-DIRECTION-DOWN) #:wk "Focus Container Down")
    `("s-k" (sway-focus-container SWAY-DIRECTION-UP) #:wk "Focus Container Up")
    `("s-l" (sway-focus-container SWAY-DIRECTION-RIGHT) #:wk "Focus Container Right")
+   `("s-u" (sway-focus-container SWAY-HIERARCHY-PARENT) #:wk "Focus parent")
+   `("s-S-u" (sway-focus-container SWAY-HIERARCHY-CHILD) #:wk "Focus child container")
 
    ;; move containers
    `("s-S-h" (sway-move-container SWAY-DIRECTION-LEFT) #:wk "Move Container Left")
@@ -72,9 +74,10 @@
    `("s-," (sway-focus-container-sibling SWAY-SIBLING-PREV) #:wk "Cycle Tabs Previous")
 
    `("s-w" (sway-kill) #:wk "Kill Window")
-   `("s-Return" (exec "alacritty") #:wk "Spawn Terminal")
-   `("M-s-Space" (exec "~/.bin/switch-keyboard-layout") #:wk "Switch Keyboard Layout")
-   `("C-s-Space" (exec "sleep 0.05 && rofi -show drun")) #:wk "Application Launcher")
+   `("s-S-Return" (exec "alacritty") #:wk "Spawn Terminal")
+   `("s-o" (exec "warpd --normal") #:wk "Control the mouse with the mind")
+;;    `("M-s-Space" (exec "~/.bin/switch-keyboard-layout") #:wk "Switch Keyboard Layout")
+;;    `("C-s-Space" (exec "sleep 0.05 && rofi -show drun")) #:wk "Application Launcher")
 
   ;; define leader keymap
   (general-define-keys
