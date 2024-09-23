@@ -551,7 +551,7 @@ Response:
   parameters:
     - option: `SWAY-LAYOUT-TOGGLE-ALL`, `SWAY-LAYOUT-TOGGLE-SPLIT`"
   (let* ((option (if option (format #f " ~a" option) ""))
-         (command (format #f "layout toggle~a" option)))
+         (command (format #f "layout toggle ~a" option)))
     (if exec (sway-dispatch-command command)
         command)))
 
