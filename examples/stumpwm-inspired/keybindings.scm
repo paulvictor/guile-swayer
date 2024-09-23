@@ -73,31 +73,53 @@
    `("s-." (sway-focus-container-sibling SWAY-SIBLING-NEXT) #:wk "Cycle Tabs Next")
    `("s-," (sway-focus-container-sibling SWAY-SIBLING-PREV) #:wk "Cycle Tabs Previous")
 
+   `("s-d" (exec "fuzzel") #:wk "Applications")
    `("s-w" (sway-kill) #:wk "Kill Window")
-   `("s-S-Return" (exec "alacritty") #:wk "Spawn Terminal")
-   `("s-o" (exec "warpd --normal") #:wk "Control the mouse with the mind")
+   `("s-S-RET" (exec "alacritty") #:wk "Spawn Terminal")
+   `("s-e" (exec "emacsclient -c -n") #:wk "Emacs client")
+   `("s-o" (exec "warpd --normal") #:wk "Control the rat with the mind")
+   `("s-DEL" (exec "swaylock-fancy") #:wk "Lock")
+   `("s-1" (sway-switch-workspace-id 1 ) #:wk "Switch ws 1")
+   `("s-2" (sway-switch-workspace-id 2 ) #:wk "Switch ws 2")
+   `("s-3" (sway-switch-workspace-id 3 ) #:wk "Switch ws 3")
+   `("s-4" (sway-switch-workspace-id 4 ) #:wk "Switch ws 4")
+   `("s-5" (sway-switch-workspace-id 5 ) #:wk "Switch ws 5")
+   `("s-6" (sway-switch-workspace-id 6 ) #:wk "Switch ws 6")
+   `("s-7" (sway-switch-workspace-id 7 ) #:wk "Switch ws 7")
+   `("s-8" (sway-switch-workspace-id 8 ) #:wk "Switch ws 8")
+   )
 ;;    `("M-s-Space" (exec "~/.bin/switch-keyboard-layout") #:wk "Switch Keyboard Layout")
-;;    `("C-s-Space" (exec "sleep 0.05 && rofi -show drun")) #:wk "Application Launcher")
+  ;;    `("C-s-Space" (exec "sleep 0.05 && rofi -show drun")) #:wk "Application Launcher")
+
 
   ;; define leader keymap
   (general-define-keys
    #:prefix "s-Space" #:wk "Leader"
-   `("o" (exec "sleep 0.05 && rofi -show drun") #:wk "Applications")
-   `("C-g" (sway-mode "default") #:wk "Abort")
-
-   ;; rofi keymap
+   ;; focus map
    `(general-define-keys
-     #:prefix "r" #:wk "Rofi"
-     ("p" (exec "sleep 0.05 && ~/.config/rofi/bin/password-manager") #:wk "Password Manager")
-     ("m" (exec "sleep 0.05 && rofi-mount") #:wk "Mount Drives")
-     ("u" (exec "sleep 0.05 && rofi-unmount") #:wk "Unmount Drives")
-     ("w" (exec "sleep 0.05 && .config/rofi/bin/wifi") #:wk "Wifi")
-     ("b" (exec "sleep 0.05 && ~/.config/rofi/bin/bluetooth") #:wk "Bluetooth")
-     ("f" (exec "sleep 0.05 && ~/.config/rofi/bin/finder") #:wk "Finder")
-     ("k" (exec "sleep 0.05 && ~/.config/rofi/bin/keyboard-layout") #:wk "Keyboard Layouts")
-     ("P" (exec "sleep 0.05 && ~/.config/rofi/bin/powermenu") #:wk "Power")
-     ("s" (exec "sleep 0.05 && ~/.config/rofi/bin/sound-input") #:wk "Sound Input")
-     ("S" (exec "sleep 0.05 && ~/.config/rofi/bin/sound-output") #:wk "Sound Output"))
+     #:prefix "f" #:wk "Focus"
+     ("h" (sway-focus-container SWAY-DIRECTION-LEFT) #:wk "Focus Container Left")
+     ("j" (sway-focus-container SWAY-DIRECTION-DOWN) #:wk "Focus Container Down")
+     ("k" (sway-focus-container SWAY-DIRECTION-UP) #:wk "Focus Container Up")
+     ("l" (sway-focus-container SWAY-DIRECTION-RIGHT) #:wk "Focus Container Right"))
+
+   ;; `("o" (exec "sleep 0.05 && rofi -show drun") #:wk "Applications")
+;;    `("C-g" (sway-mode "default") #:wk "Abort")
+
+
+;;    ;; rofi keymap
+;;    `(general-define-keys
+;;      #:prefix "r" #:wk "Rofi"
+;;      ("p" (exec "sleep 0.05 && ~/.config/rofi/bin/password-manager") #:wk "Password Manager")
+;;      ("m" (exec "sleep 0.05 && rofi-mount") #:wk "Mount Drives")
+;;      ("u" (exec "sleep 0.05 && rofi-unmount") #:wk "Unmount Drives")
+;;      ("w" (exec "sleep 0.05 && .config/rofi/bin/wifi") #:wk "Wifi")
+;;      ("b" (exec "sleep 0.05 && ~/.config/rofi/bin/bluetooth") #:wk "Bluetooth")
+;;      ("f" (exec "sleep 0.05 && ~/.config/rofi/bin/finder") #:wk "Finder")
+;;      ("k" (exec "sleep 0.05 && ~/.config/rofi/bin/keyboard-layout") #:wk "Keyboard Layouts")
+;;      ("P" (exec "sleep 0.05 && ~/.config/rofi/bin/powermenu") #:wk "Power")
+;;      ("s" (exec "sleep 0.05 && ~/.config/rofi/bin/sound-input") #:wk "Sound Input")
+;;      ("S" (exec "sleep 0.05 && ~/.config/rofi/bin/sound-output") #:wk "Sound Output"))
 
    ;; screenshot keymap
    ;; flameshot is not performing well under wayland & multiple monitors

@@ -45,25 +45,38 @@
 (sway-subscribe-all)
 
 ;; configure workspace groups to sync groups
-(define OUTPUTS '("HDMI-A-1" "DP-1" ))
-(define GROUPS
-  '(("11-browser" 		"21-browser" 	)
-    ("12-development" 	"22-development")
-    ("13-databases" 	"23-databases" 		)
-    ("14-communication" "24-communication")
-    ("15-development" 	"25-development" 	)
-    ("16-gaming" 		"26-gaming" 		)
-    ("17-mail" 			"27-mail" 			)
-    ("18-development" 	"28-development")
-    ("19-media" 		"29-media" 			)))
+;; (define OUTPUTS '("eDP-1"))
+;; (define GROUPS
+;;   (map (lambda (l) (list (car l)))
+;;        '(("11-browser" 		"21-browser" 	)
+;;          ("12-development" 	"22-development")
+;;          ("13-databases" 	"23-databases" 		)
+;;          ("14-communication" "24-communication")
+;;          ("15-development" 	"25-development" 	)
+;;          ("16-gaming" 		"26-gaming" 		)
+;;          ("17-mail" 			"27-mail" 			)
+;;          ("18-development" 	"28-development")
+;;          ("19-media" 		"29-media" 			))))
 
-(workspace-groups-configure #:groups GROUPS #:outputs OUTPUTS)
-(workspace-groups-init)
+;; ;; (define OUTPUTS '("HDMI-A-1" "DP-1" ))
+;; ;; (define GROUPS
+;; ;;   '(("11-browser" 		"21-browser" 	)
+;; ;;     ("12-development" 	"22-development")
+;; ;;     ("13-databases" 	"23-databases" 		)
+;; ;;     ("14-communication" "24-communication")
+;; ;;     ("15-development" 	"25-development" 	)
+;; ;;     ("16-gaming" 		"26-gaming" 		)
+;; ;;     ("17-mail" 			"27-mail" 			)
+;; ;;     ("18-development" 	"28-development")
+;; ;;     ("19-media" 		"29-media" 			)))
+
+;; (workspace-groups-configure #:groups GROUPS #:outputs OUTPUTS)
+;; (workspace-groups-init)
 
 ;; configure workspace grid to arrange workspaces in a matrix
-(define ROWS 3)
-(define COLUMNS 3)
-(define WORKSPACES (apply map list GROUPS))
+;; (define ROWS 3)
+;; (define COLUMNS 3)
+;; (define WORKSPACES (apply map list GROUPS))
 
 ;; (workspace-grid-configure #:rows ROWS #:columns COLUMNS #:workspaces WORKSPACES)
 ;; (workspace-grid-init)
