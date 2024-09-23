@@ -3,6 +3,7 @@
              (swayipc)
              (ice-9 popen)
              (srfi srfi-18)
+             (srfi srfi-13)
              (ice-9 textual-ports))
 
 (define (exec command)
@@ -26,19 +27,8 @@
 
   ;; define root keybindings
   (general-define-keys
-   ;; media-keys
-;;    `("XF86AudioLowerVolume" (exec "pactl set-sink-volume @DEFAULT_SINK@ -5%") #:wk "Decrease Volume")
-;;    `("XF86AudioRaiseVolume" (exec "pactl set-sink-volume @DEFAULT_SINK@ +5%") #:wk "Increase Volume")
-;;    `("s-[" (exec "pactl set-sink-volume @DEFAULT_SINK@ -5%") #:wk "Decrease Volume")
-;;    `("s-]" (exec "pactl set-sink-volume @DEFAULT_SINK@ +5%") #:wk "Increase Volume")
-;;    `("XF86AudioMute" (exec "pactl set-sink-mute @DEFAULT_SINK@ toggle") #:wk "Toggle Mute")
-;;    `("XF86AudioNext" (exec "mpc next") #:wk "Next Song")
-;;    `("XF86AudioPrev" (exec "mpc prev") #:wk "Previous Song")
-;;    `("XF86AudioPlay" (exec "mpc toggle") #:wk "Toggle Player")
-
-;;    ;; brightness-keys
-;;    `("XF86MonBrightnessUp" (exec "brightnessctl set +10%") #:wk "Increase Brightness")
-;;    `("XF86MonBrightnessDown" (exec "brightnessctl set 10%-") #:wk "Decrease Brightness")
+   '("s-exclam" (sway-move-container-to-workspace 1) #:wk "Move to workspace 1"))
+  (general-define-keys
 
    ;; window and group management
    `("s-f" (sway-fullscreen SWAY-FULLSCREEN-TOGGLE) #:wk "Toggle Fullscreen")
@@ -86,11 +76,7 @@
    `("s-14" (sway-switch-workspace-id 5) #:wk "Switch ws 5")
    `("s-15" (sway-switch-workspace-id 6) #:wk "Switch ws 6")
    `("s-16" (sway-switch-workspace-id 7) #:wk "Switch ws 7")
-   `("s-17" (sway-switch-workspace-id 8) #:wk "Switch ws 8")
-   )
-;;    `("M-s-Space" (exec "~/.bin/switch-keyboard-layout") #:wk "Switch Keyboard Layout")
-  ;;    `("C-s-Space" (exec "sleep 0.05 && rofi -show drun")) #:wk "Application Launcher")
-
+   `("s-17" (sway-switch-workspace-id 8) #:wk "Switch ws 8"))
 
   ;; define leader keymap
   (general-define-keys
@@ -103,8 +89,37 @@
      ("k" (sway-focus-container SWAY-DIRECTION-UP) #:wk "Focus Container Up")
      ("l" (sway-focus-container SWAY-DIRECTION-RIGHT) #:wk "Focus Container Right"))
 
-   ;; `("o" (exec "sleep 0.05 && rofi -show drun") #:wk "Applications")
-;;    `("C-g" (sway-mode "default") #:wk "Abort")
+   `(general-define-keys
+     #:prefix "s" #:wk "Screenshot"
+     ("g" (exec "slurp | grim -g - - | wl-copy") #:wk "Gui Screenshot")
+     ("s" (exec (string-append "grim -o \"" (focused-output-name) "\" - | wl-copy")) #:wk "Current Screen")
+     ("f" (exec "grim - | wl-copy") #:wk "All Screens")
+     ("m" (exec "grim -g - - | wl-copy") #:wk "Last Region")
+
+     (general-define-keys
+      #:prefix "d" #:wk "DelayedScreenshot"
+      ("g" (exec "sleep 2 && slurp | grim -g - - | wl-copy") #:wk "Gui Screenshot")
+      ("s" (exec (string-append "sleep 2 && grim -o \"" (focused-output-name) "\" - | wl-copy")) #:wk "Current Screen")
+      ("f" (exec "sleep 2 && grim - | wl-copy") #:wk "All Screens")
+      ("m" (exec "sleep 2 && grim -g - - | wl-copy") #:wk "Last Region")))
+
+   ;; session keymap
+   `(general-define-keys
+     #:prefix "DEL" #:wk "Session"
+     ("q" (sway-exit) #:wk "Exit Sway")
+     ("l" (exec "swaylock-fancy") #:wk "Lock session")
+     ("r" (sway-reload) #:wk "Reload Sway"))
+
+   `(general-define-keys
+     #:prefix "w" #:wk "Window"
+     ("v" (sway-layout SWAY-LAYOUT-SPLITV) #:wk "Split Vertically")
+     ("h" (sway-layout SWAY-LAYOUT-SPLITH) #:wk "Split Horizontally")
+     ("f" (sway-fullscreen SWAY-FULLSCREEN-TOGGLE) #:wk "Fullscreen")
+     ("d" (sway-layout SWAY-LAYOUT-DEFAULT) #:wk "Default Layout")
+     ("t" (sway-layout SWAY-LAYOUT-TABBED) #:wk "Tabbed Layout")
+     ("SPC"
+      (sway-layout-toggle
+       (string-join '("stacking" "tabbed" "splitv" "splith") " ")) #:wk "Switch layouts"))))
 
 
 ;;    ;; rofi keymap
@@ -137,30 +152,17 @@
    ;;    ("f" (exec "export XDG_CURRENT_DESKTOP=sway && flameshot full -d 2500"))
    ;;    ("l" (exec "export XDG_CURRENT_DESKTOP=sway && flameshot gui -d 2500 --last-region"))))
 
-   `(general-define-keys
-     #:prefix "s" #:wk "Screenshot"
-     ("g" (exec "slurp | grim -g - - | wl-copy") #:wk "Gui Screenshot")
-     ("s" (exec (string-append "grim -o \"" (focused-output-name) "\" - | wl-copy")) #:wk "Current Screen")
-     ("f" (exec "grim - | wl-copy") #:wk "All Screens")
-     ("m" (exec "grim -g - - | wl-copy") #:wk "Last Region")
 
-     (general-define-keys
-      #:prefix "d" #:wk "DelayedScreenshot"
-      ("g" (exec "sleep 2 && slurp | grim -g - - | wl-copy") #:wk "Gui Screenshot")
-      ("s" (exec (string-append "sleep 2 && grim -o \"" (focused-output-name) "\" - | wl-copy")) #:wk "Current Screen")
-      ("f" (exec "sleep 2 && grim - | wl-copy") #:wk "All Screens")
-      ("m" (exec "sleep 2 && grim -g - - | wl-copy") #:wk "Last Region")))
+   ;; media-keys
+;;    `("XF86AudioLowerVolume" (exec "pactl set-sink-volume @DEFAULT_SINK@ -5%") #:wk "Decrease Volume")
+;;    `("XF86AudioRaiseVolume" (exec "pactl set-sink-volume @DEFAULT_SINK@ +5%") #:wk "Increase Volume")
+;;    `("s-[" (exec "pactl set-sink-volume @DEFAULT_SINK@ -5%") #:wk "Decrease Volume")
+;;    `("s-]" (exec "pactl set-sink-volume @DEFAULT_SINK@ +5%") #:wk "Increase Volume")
+;;    `("XF86AudioMute" (exec "pactl set-sink-mute @DEFAULT_SINK@ toggle") #:wk "Toggle Mute")
+;;    `("XF86AudioNext" (exec "mpc next") #:wk "Next Song")
+;;    `("XF86AudioPrev" (exec "mpc prev") #:wk "Previous Song")
+;;    `("XF86AudioPlay" (exec "mpc toggle") #:wk "Toggle Player")
 
-   ;; session keymap
-   `(general-define-keys
-     #:prefix "q" #:wk "Session"
-     ("q" (sway-exit) #:wk "Exit Sway")
-     ("r" (sway-reload) #:wk "Reload Sway"))
-
-   `(general-define-keys
-     #:prefix "w" #:wk "Window"
-     ("v" (sway-layout SWAY-LAYOUT-SPLITV) #:wk "Split Vertically")
-     ("h" (sway-layout SWAY-LAYOUT-SPLITH) #:wk "Split Horizontally")
-     ("f" (sway-fullscreen SWAY-FULLSCREEN-TOGGLE) #:wk "Fullscreen")
-     ("d" (sway-layout SWAY-LAYOUT-DEFAULT) #:wk "Default Layout")
-     ("t" (sway-layout SWAY-LAYOUT-TABBED) #:wk "Tabbed Layout"))))
+;;    ;; brightness-keys
+;;    `("XF86MonBrightnessUp" (exec "brightnessctl set +10%") #:wk "Increase Brightness")
+;;    `("XF86MonBrightnessDown" (exec "brightnessctl set 10%-") #:wk "Decrease Brightness")
